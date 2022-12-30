@@ -1,1 +1,8 @@
 ## Place your answers here.
+
+first we need to find a buffer.
+in that case, reqpath[4096] is a place where buffer overflow could happen.
+
+find the start address of the reqpath[4096].
+
+then find the return address of the function  process_client
