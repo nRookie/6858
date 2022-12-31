@@ -6,3 +6,31 @@ in that case, reqpath[4096] is a place where buffer overflow could happen.
 find the start address of the reqpath[4096].
 
 then find the return address of the function  process_client
+
+
+
+
+### first mistake I had made.
+
+
+I did not check the code of http.c, and thought that http_request will directly put the data into reqpath.
+
+buf in fact. it will first read it into buf[] array, which is a global(static variable) which is not on the stack. 
+after I check the http.c code and debug it with the gdb.
+
+
+url_decode. this function will get the things from buf to reqpath.
+
+find the start address of the reqpath[4096]
+
+find the return address of the function url_decode.
+
+
+
+
+
+but what is the reason the http_read_line will read 4099. i am not sure
+and hangs instead of crash. ( it's a really weird behavior).
+
+
+
