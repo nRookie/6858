@@ -34,3 +34,11 @@ and hangs instead of crash. ( it's a really weird behavior).
 
 
 
+
+
+### second mistake.
+
+try to hack the reqpath, but it is very diffcult to hack.
+since the GET POST request is defined. so there is nothing much I can do about.
+
+in that case I need to hack the http_request_headers function
