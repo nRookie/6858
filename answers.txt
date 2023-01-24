@@ -41,4 +41,28 @@ and hangs instead of crash. ( it's a really weird behavior).
 try to hack the reqpath, but it is very diffcult to hack.
 since the GET POST request is defined. so there is nothing much I can do about.
 
+
+we cannot overflow the reqpath buffer.
+
 in that case I need to hack the http_request_headers function
+
+
+
+
+### http_request_headers
+
+two buffers on the stack, we can try overflow it.
+
+
+
+# value 0x7fffffffda50
+# envvar 0x7fffffffd850
+# retaddr 0x7fffffffdc88
+
+
+print &value, &envvar
+info frame  find the return address of the http_request_headers.
+
+
+our http request is combined by two lines 
+
