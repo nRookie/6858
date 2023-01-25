@@ -66,3 +66,58 @@ info frame  find the return address of the http_request_headers.
 
 our http request is combined by two lines 
 
+
+
+### inject code in http_serve
+
+              pn                        ret 
+<-- [    ] [0         2048][          ][     ]
+
+
+st_ret = 0x7fffffffdc88
+st_pn = 0x7fffffffd460
+
+
+
+I have not seen any usage of fd in http_serve, yet.
+here comes the http_serve_file. 
+in http_serve_file, buf[1024], fd
+file_fd will open the path pointed by pn(which is /home/student/lab/index.html)
+
+mime_type check
+
+send_file,  send the content in index.html to the fd descriptor.
+
+#### not working,
+as the information given aboe,  http_serve, only return the  index.html to the fd descriptor.
+we cannot buffer overflow it.
+
+thus, still get back to the http_request headers.
+
+
+### url_decode
+
+url_decode_rip=0x7fffffffd838 
+&value[512]=0x7fffffffdc50
+http_request_header_rip= 0x7fffffffdc88
+
+bottom of memory                                             top of memory
+           env[d850  da50]  value[da50   dc50]  ret[0x7fffffffdc88]
+<-- [    ] [0                512][0               512 ]    [     ]
+
+
+dc88 - da50 = 218    (536) 
+
+### finally worked! finish part 2
+
+
+keypoint
+
+urllib.parse.quote_from_bytes(shellcode).encode('ascii') 
+will seems to change the shellcode, length.
+we need to use the original length of the shellcode.
+
+
+### have not erase the core dump yet.
+
+### maybe need to add a exit
